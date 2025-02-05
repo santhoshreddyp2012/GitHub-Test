@@ -53,3 +53,13 @@ jobs:
       run: |
         echo "Deploying project"
         cat build-tag.txt
+
+    - name: Create and push tag
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        TAG_NAME="build-$(date +%Y%m%d%H%M%S)"
+        git config --global user.name "santhoshreddyp2012"
+        git config --global user.email "santhoshreddyp2012@gmail.com"
+        git tag $TAG_NAME
+        git push origin $TAG_NAME
