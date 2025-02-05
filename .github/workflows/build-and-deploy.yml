@@ -1,0 +1,55 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - name: Create build tag file
+      run: echo "Build completed on $(date)" > build-tag.txt
+
+    - name: Upload build-tag.txt
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-tag
+        path: build-tag.txt
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Download build-tag.txt
+      uses: actions/download-artifact@v2
+      with:
+        name: build-tag
+
+    - name: Deploy
+      run: |
+        echo "Deploying project"
+        cat build-tag.txt

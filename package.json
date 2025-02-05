@@ -1,0 +1,15 @@
+{
+    "name": "sample-app",
+    "version": "1.0.0",
+    "description": "A simple Node.js application",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js",
+      "build": "echo 'Build step: Nothing to build for this simple app'"
+    },
+    "author": "santhoshreddyp2012",
+    "license": "ISC",
+    "dependencies": {
+      "express": "^4.17.1"
+    }
+  }
